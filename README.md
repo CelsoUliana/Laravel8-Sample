@@ -1,5 +1,5 @@
-# laravel-DDD
-A sample project to teach myself laravel with a DDD-like approach.
+# Laravel8 Sample
+A sample project to teach myself laravel 8 using sail.
 
 ## Scope
 Let's say we need to have a very simple hotel booking app. The first approach would be an inside system that users register customers. A second approach would be an online booking system (abstract the payment part).
