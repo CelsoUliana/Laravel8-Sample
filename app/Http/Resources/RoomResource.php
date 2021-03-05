@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoomResource extends JsonResource
@@ -18,7 +19,7 @@ class RoomResource extends JsonResource
             'id' => $this->id,
             'is_booked' => $this->is_booked,
             'description' => $this->description,
-            'room_type_id' => $this->room_type_id
+            'room_type' => request()->getHttpHost() . $this->room_type_id
         ];
         return parent::toArray($request);
     }

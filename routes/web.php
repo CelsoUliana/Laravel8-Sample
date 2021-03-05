@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\RoomTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('{any}', function () {
-    return view('welcome');
-})->where('any', '.*');
+// Route::get('{any}', function () {
+//     return view('welcome');
+// })->where('any', '.*');
+
+Route::get('/customers', [CustomerController::class, 'index']);
+Route::get('/roomtypes', [RoomTypeController::class, 'index']);

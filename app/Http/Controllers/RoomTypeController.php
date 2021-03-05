@@ -9,6 +9,7 @@ use App\Http\Resources\RoomTypeResource;
 class RoomTypeController extends Controller
 {
     public function index(){
-        return RoomTypeResource::collection(RoomType::all());
+        //$data = $this->apiController->index();
+        return view('new');
     }
 }

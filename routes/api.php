@@ -4,8 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RoomController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\Api\CustomerApiController;
+use App\Http\Controllers\Api\RoomTypeApiController;
 use App\Http\Controllers\ReservationController;
 
 
@@ -38,18 +38,34 @@ Route::get('/test', function() {
     return ['works' => 'lmao'];
 });
 
+/*
+    Grouping API REST customer model.
+*/
 Route::group(array('prefix' => 'customers'), function()
 {
-    Route::get('/', [CustomerController::class, 'index']);
-    Route::get('/{id}', [CustomerController::class, 'search']);
+    Route::get('/', [CustomerApiController::class, 'index']);
+    Route::get('/{customer}', [CustomerApiController::class, 'show']);
 
-    Route::post('/add', [CustomerController::class, 'add']);
-    Route::post('/update/{id}', [CustomerController::class, 'update']);
+    Route::post('/', [CustomerApiController::class, 'store']);
+    Route::put('/{customer}', [CustomerApiController::class, 'update']);
+    
+    Route::delete('/{customer}', [CustomerApiController::class, 'delete']);
+});
 
-    Route::delete('/delete/{id}', [CustomerController::class, 'delete']);
+/*
+    Grouping API REST roomtype model.
+*/
+Route::group(array('prefix' => 'roomtypes'), function()
+{
+    Route::get('/', [RoomTypeApiController::class, 'index']);
+    Route::get('/{roomtype}', [RoomTypeApiController::class, 'show']);
+
+    Route::post('/', [RoomTypeApiController::class, 'store']);
+    Route::put('/{roomtype}', [RoomTypeApiController::class, 'update']);
+    
+    Route::delete('/{roomtype}', [RoomTypeApiController::class, 'delete']);
 });
 
 
 Route::get('/rooms', [RoomController::class, 'index']);
-Route::get('/roomstypes', [RoomTypeController::class, 'index']);
 Route::get('/reservations', [ReservationController::class, 'index']);
