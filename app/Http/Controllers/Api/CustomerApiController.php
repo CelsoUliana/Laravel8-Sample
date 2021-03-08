@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\EditCustomerRequest;
+use App\Http\Requests\CreateCustomerRequest;
 use App\Models\Customer;
 use App\Http\Resources\CustomerResource;
 
@@ -17,26 +19,18 @@ class CustomerApiController extends Controller
         return new CustomerResource($customer);
     }
 
-    public function store(Request $request){
+    public function store(CreateCustomerRequest $request){
 
-        $validated = $request->validate([
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'email' => 'required|max:255|unique:customers'
-        ]);
+        $validated = $request->validated();
 
         $customer = Customer::Create($validated);
 
         return response()->json(new CustomerResource($customer), 201);
     }
 
-    public function update(Customer $customer, Request $request){
+    public function update(Customer $customer, EditCustomerRequest $request){
 
-        $validated = $request->validate([
-            'first_name' => 'max:255',
-            'last_name' => 'max:255',
-            'email' => 'max:255|unique:customers'
-        ]);
+        $validated = $request->validated();
 
         $customer->update($validated);
 

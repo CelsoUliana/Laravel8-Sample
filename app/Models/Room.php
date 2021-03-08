@@ -7,8 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
-    protected $fillable = ['is_booked', 'description', 'room_type_id'];
     use HasFactory;
+    
+    protected $attributes = [
+        'is_booked' => 0,
+        'description' => 'No description'
+    ];
+
+    protected $fillable = ['is_booked', 'description', 'room_type_id'];
+
     function roomType(){
         return $this->BelongsTo(RoomType::class);
     }

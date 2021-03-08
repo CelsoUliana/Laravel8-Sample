@@ -3,11 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\RoomController;
+use App\Http\Controllers\Api\RoomApiController;
 use App\Http\Controllers\Api\CustomerApiController;
 use App\Http\Controllers\Api\RoomTypeApiController;
-use App\Http\Controllers\ReservationController;
-
+use App\Http\Controllers\Api\ReservationApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +34,7 @@ Route::get('/migrate', function() {
 });
 
 Route::get('/test', function() {
+    Artisan::call('config:clear');
     return ['works' => 'lmao'];
 });
 
@@ -66,6 +66,30 @@ Route::group(array('prefix' => 'roomtypes'), function()
     Route::delete('/{roomtype}', [RoomTypeApiController::class, 'delete']);
 });
 
+/*
+    Grouping API REST room model.
+*/
+Route::group(array('prefix' => 'rooms'), function()
+{
+    Route::get('/', [RoomApiController::class, 'index']);
+    Route::get('/{room}', [RoomApiController::class, 'show']);
 
-Route::get('/rooms', [RoomController::class, 'index']);
-Route::get('/reservations', [ReservationController::class, 'index']);
+    Route::post('/', [RoomApiController::class, 'store']);
+    Route::put('/{room}', [RoomApiController::class, 'update']);
+    
+    Route::delete('/{room}', [RoomApiController::class, 'delete']);
+});
+
+/*
+    Grouping API REST reservation model.
+*/
+Route::group(array('prefix' => 'reservations'), function()
+{
+    Route::get('/', [ReservationApiController::class, 'index']);
+    Route::get('/{reservation}', [ReservationApiController::class, 'show']);
+
+    Route::post('/', [ReservationApiController::class, 'store']);
+    Route::put('/{reservation}', [ReservationApiController::class, 'update']);
+    
+    Route::delete('/{reservation}', [ReservationApiController::class, 'delete']);
+});

@@ -19,8 +19,7 @@ class RoomResource extends JsonResource
             'id' => $this->id,
             'is_booked' => $this->is_booked,
             'description' => $this->description,
-            'room_type' => request()->getHttpHost() . $this->room_type_id
+            'room_type' => new RoomTypeResource($this->roomType)
         ];
-        return parent::toArray($request);
     }
 }

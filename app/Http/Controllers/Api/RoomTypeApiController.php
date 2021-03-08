@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RoomType;
+use App\Http\Requests\EditRoomTypeRequest;
+use App\Http\Requests\CreateRoomTypeRequest;
 use App\Http\Resources\RoomTypeResource;
 
 class RoomTypeApiController extends Controller
@@ -17,31 +19,18 @@ class RoomTypeApiController extends Controller
         return new RoomTypeResource($roomtype);
     }
 
-    public function store(Request $request){
+    public function store(CreateRoomTypeRequest $request){
 
-        // $request->price = $request->price * 100.0;
-        // $request->price = (int) $request->price;
-
-        $validated = $request->validate([
-            'description' => 'required|max:255',
-            'type' => 'required|max:255',
-            'price' => 'required|Integer'
-        ]);
+        $validated = $request->validated();
 
         $roomtype = RoomType::Create($validated);
 
         return response()->json(new RoomTypeResource($roomtype), 201);
     }
 
-    public function update(RoomType $roomtype, Request $request){
+    public function update(RoomType $roomtype, EditRoomTypeRequest $request){
 
-        $validated = $request->validate([
-            'description' => 'max:255',
-            'type' => 'max:255',
-            'price' => 'integer'
-        ]);
-
-        //$request->price *= 100;
+        $validated = $request->validated();
 
         $roomtype->update($validated);
 
